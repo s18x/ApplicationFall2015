@@ -95,38 +95,62 @@ public class WordGame {
     //almost works
     public int diagonalCheck() {
         int diagonalReps = 0;
-        String diagonalWord = "";
-        for (int i = 0; i < table.length; i++) {
-            for (int j = 0; j < table[0].length; j++) {
-                int x = i;
-                int y = j;
-                while (x < table.length && y < table[0].length) {
-                    diagonalWord += Character.toString(table[x++][y++]);
-                }
-                String wordDiagonal = new StringBuilder(diagonalWord).reverse().toString();
-                if (diagonalWord.contains(word) || wordDiagonal.contains(word)) {
-                    diagonalReps++;
-                }
+        String diagonalWord;
+        //One way
+        for (int j = 0; j < table[0].length; j++) {
+            diagonalWord = "";
+            int x = 0;
+            int y = j;
+            while (x < table.length && y < table[0].length) {
+                diagonalWord += Character.toString(table[x++][y++]);
+            }
+            String wordDiagonal = new StringBuilder(diagonalWord).reverse().toString();
+            if (diagonalWord.contains(word) || wordDiagonal.contains(word)) {
+                diagonalReps++;
             }
         }
-        for (int i = table.length - 1; i >= 0; i--) {
-            for (int j = table[0].length - 1; j >= 0; j--) {
-                int x = i;
-                int y = j;
-                while (x >= 0 && y >= 0) {
-                    diagonalWord += Character.toString(table[x--][y--]);
-                }
-                String wordDiagonal = new StringBuilder(diagonalWord).reverse().toString();
-                if (diagonalWord.contains(word) || wordDiagonal.contains(word)) {
-                    diagonalReps++;
-                }
+        for (int i = 1; i < table.length; i++) {
+            diagonalWord = "";
+            int x = i;
+            int y = 0;
+            while (x < table.length && y < table[0].length) {
+                diagonalWord += Character.toString(table[x++][y++]);
+            }
+            String wordDiagonal = new StringBuilder(diagonalWord).reverse().toString();
+            if (diagonalWord.contains(word) || wordDiagonal.contains(word)) {
+                diagonalReps++;
+            }
+        }
+        //or another...
+        for (int j = table[0].length - 1; j >= 0; j--) {
+            diagonalWord = "";
+            int x = table.length - 1;
+            int y = j;
+            while (x >= 0 && y >= 0) {
+                diagonalWord += Character.toString(table[x--][y--]);
+            }
+            String wordDiagonal = new StringBuilder(diagonalWord).reverse().toString();
+            if (diagonalWord.contains(word) || wordDiagonal.contains(word)) {
+                diagonalReps++;
+            }
+        }
+        for (int i = table.length - 2; i >= 0; i--) {
+            diagonalWord = "";
+            int x = i;
+            int y = table[0].length - 1;
+            while (x >= 0 && y >= 0) {
+                diagonalWord += Character.toString(table[x--][y--]);
+            }
+            String wordDiagonal = new StringBuilder(diagonalWord).reverse().toString();
+            if (diagonalWord.contains(word) || wordDiagonal.contains(word)) {
+                diagonalReps++;
             }
         }
         return diagonalReps;
     }
 
     public String checkTable() {
-        int result = this.rowCheck() + this.columnCheck() /*+ this.diagonalCheck()*/;
+        int result = this.rowCheck() + this.columnCheck() + this.diagonalCheck();
         return Integer.toString(result);
     }
 
